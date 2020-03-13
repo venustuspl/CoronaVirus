@@ -5,11 +5,10 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 import static org.apache.poi.ss.usermodel.CellType.STRING;
@@ -38,7 +37,7 @@ public class ExcelDateReader {
      */
     public static void readFromExcel(String file) throws IOException {
         HSSFWorkbook myExcelBook = new HSSFWorkbook(new FileInputStream(file));
-        HSSFSheet myExcelSheet = myExcelBook.getSheet("Birthdays");
+        HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
         HSSFRow row = myExcelSheet.getRow(0);
 
         if (row.getCell(0).getCellType() == STRING) {
@@ -50,6 +49,32 @@ public class ExcelDateReader {
             Date birthdate = row.getCell(1).getDateCellValue();
             System.out.println("birthdate :" + birthdate);
         }
+
+        myExcelBook.close();
+
+    }
+
+    public static void readFromCSV_4_COMS(InputStream file) throws IOException {
+        HSSFWorkbook myExcelBook = new HSSFWorkbook(file);
+        HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
+        HSSFRow row = myExcelSheet.getRow(0);
+
+        String country = row.getCell(1).getStringCellValue();
+        Double count = 0.0;
+        Map<String, Double> resultMap = new HashMap<>();
+        for (HSSFRow rows : myExcelSheet.getRow()) {
+            // System.out.println(rows.getCell(1) + " " + rows.getCell(2));
+            if (rows.getCell(1).getStringCellValue().equals(country)) {
+                count += rows.getCell(2).getNumericCellValue();
+            } else {
+                resultMap.put(rows.getCell(1).getStringCellValue(), count);
+                count = 0.0;
+            }
+
+
+        }
+
+        System.out.println(country);
 
         myExcelBook.close();
 
