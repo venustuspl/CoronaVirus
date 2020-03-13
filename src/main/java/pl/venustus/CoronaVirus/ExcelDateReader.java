@@ -1,6 +1,5 @@
 package pl.venustus.CoronaVirus;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -11,6 +10,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+
+import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
+import static org.apache.poi.ss.usermodel.CellType.STRING;
 
 /**
  * Simple Java Program to read and write dates from Excel file in Java.
@@ -39,12 +41,12 @@ public class ExcelDateReader {
         HSSFSheet myExcelSheet = myExcelBook.getSheet("Birthdays");
         HSSFRow row = myExcelSheet.getRow(0);
 
-        if (row.getCell(0).getCellType() == HSSFCell.) {
+        if (row.getCell(0).getCellType() == STRING) {
             String name = row.getCell(0).getStringCellValue();
             System.out.println("name : " + name);
         }
 
-        if (row.getCell(1).getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
+        if (row.getCell(1).getCellType() == NUMERIC) {
             Date birthdate = row.getCell(1).getDateCellValue();
             System.out.println("birthdate :" + birthdate);
         }
