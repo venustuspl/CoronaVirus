@@ -3,14 +3,14 @@ package pl.venustus.CoronaVirus;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
 
-import java.io.*;
-import java.util.Date;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 import static org.apache.poi.ss.usermodel.CellType.STRING;
 
 /**
@@ -35,25 +35,24 @@ public class ExcelDateReader {
      * @param file
      * @throws IOException
      */
-    public static void readFromExcel(String file) throws IOException {
-        HSSFWorkbook myExcelBook = new HSSFWorkbook(new FileInputStream(file));
-        HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
-        HSSFRow row = myExcelSheet.getRow(0);
-
-        if (row.getCell(0).getCellType() == STRING) {
-            String name = row.getCell(0).getStringCellValue();
-            System.out.println("name : " + name);
-        }
-
-        if (row.getCell(1).getCellType() == NUMERIC) {
-            Date birthdate = row.getCell(1).getDateCellValue();
-            System.out.println("birthdate :" + birthdate);
-        }
-
-        myExcelBook.close();
-
-    }
-
+//    public static void readFromExcel(String file) throws IOException {
+//        HSSFWorkbook myExcelBook = new HSSFWorkbook(new FileInputStream(file));
+//        HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
+//        HSSFRow row = myExcelSheet.getRow(0);
+//
+//        if (row.getCell(0).getCellType() == STRING) {
+//            String name = row.getCell(0).getStringCellValue();
+//            System.out.println("name : " + name);
+//        }
+//
+//        if (row.getCell(1).getCellType() == NUMERIC) {
+//            Date birthdate = row.getCell(1).getDateCellValue();
+//            System.out.println("birthdate :" + birthdate);
+//        }
+//
+//        myExcelBook.close();
+//
+//    }
     public static void readFromCSV_4_COMS(InputStream file) throws IOException {
         HSSFWorkbook myExcelBook = new HSSFWorkbook(file);
         HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
@@ -62,15 +61,19 @@ public class ExcelDateReader {
         String country = row.getCell(1).getStringCellValue();
         Double count = 0.0;
         Map<String, Double> resultMap = new HashMap<>();
-        for (HSSFRow rows : myExcelSheet.getRow()) {
+        for (Row rows : myExcelSheet) {
             // System.out.println(rows.getCell(1) + " " + rows.getCell(2));
             if (rows.getCell(1).getStringCellValue().equals(country)) {
-                count += rows.getCell(2).getNumericCellValue();
+                //count += Double.parseDouble(rows.getCell(2).getStringCellValue());
             } else {
                 resultMap.put(rows.getCell(1).getStringCellValue(), count);
                 count = 0.0;
             }
-
+            if (rows.getCell(2).getCellType() == STRING) {
+                System.out.println(rows.getCell(2).getStringCellValue());
+            } else {
+                System.out.println(rows.getCell(2).getNumericCellValue());
+            }
 
         }
 
@@ -88,42 +91,42 @@ public class ExcelDateReader {
      * @throws IOException
      * @throws FileNotFoundException
      */
-    @SuppressWarnings("deprecation")
-    public static void writeIntoExcel(String file) throws FileNotFoundException, IOException {
-        Workbook book = new HSSFWorkbook();
-        Sheet sheet = book.createSheet("Birthdays");
+    //  @SuppressWarnings("deprecation")
+//    public static void writeIntoExcel(String file) throws FileNotFoundException, IOException {
+//        Workbook book = new HSSFWorkbook();
+//        Sheet sheet = book.createSheet("Birthdays");
+//
+//        // first row start with zero
+//        Row row = sheet.createRow(0);
+//
+//        // we will write name and birthdates in two columns
+//        // name will be String and birthday would be Date
+//        // formatted as dd.mm.yyyy
+//        Cell name = row.createCell(0);
+//        name.setCellValue("John");
+//
+//        Cell birthdate = row.createCell(1);
+//
+//        // steps to format a cell to display date value in Excel
+//        // 1. Create a DataFormat
+//        // 2. Create a CellStyle
+//        // 3. Set format into CellStyle
+//        // 4. Set CellStyle into Cell
+//        // 5. Write java.util.Date into Cell
+//        DataFormat format = book.createDataFormat();
+//        CellStyle dateStyle = book.createCellStyle();
+//        dateStyle.setDataFormat(format.getFormat("dd.mm.yyyy"));
+//        birthdate.setCellStyle(dateStyle);
+//
+//        // It's very trick method, deprecated, don't use
+//        // year is from 1900, month starts with zero
+//        birthdate.setCellValue(new Date(110, 10, 10));
+//
+//        // auto-resizing columns
+//        sheet.autoSizeColumn(1);
+//
+//        // Now, its time to write content of Excel into File
+//        book.write(new FileOutputStream(file));
+//        book.close();}
 
-        // first row start with zero
-        Row row = sheet.createRow(0);
-
-        // we will write name and birthdates in two columns
-        // name will be String and birthday would be Date
-        // formatted as dd.mm.yyyy
-        Cell name = row.createCell(0);
-        name.setCellValue("John");
-
-        Cell birthdate = row.createCell(1);
-
-        // steps to format a cell to display date value in Excel
-        // 1. Create a DataFormat
-        // 2. Create a CellStyle
-        // 3. Set format into CellStyle
-        // 4. Set CellStyle into Cell
-        // 5. Write java.util.Date into Cell
-        DataFormat format = book.createDataFormat();
-        CellStyle dateStyle = book.createCellStyle();
-        dateStyle.setDataFormat(format.getFormat("dd.mm.yyyy"));
-        birthdate.setCellStyle(dateStyle);
-
-        // It's very trick method, deprecated, don't use
-        // year is from 1900, month starts with zero
-        birthdate.setCellValue(new Date(110, 10, 10));
-
-        // auto-resizing columns
-        sheet.autoSizeColumn(1);
-
-        // Now, its time to write content of Excel into File
-        book.write(new FileOutputStream(file));
-        book.close();
-    }
 }
