@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.poi.ss.usermodel.CellType.STRING;
+import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 
 /**
  * Simple Java Program to read and write dates from Excel file in Java.
@@ -62,22 +62,22 @@ public class ExcelDateReader {
         Double count = 0.0;
         Map<String, Double> resultMap = new HashMap<>();
         for (Row rows : myExcelSheet) {
-            // System.out.println(rows.getCell(1) + " " + rows.getCell(2));
+
             if (rows.getCell(1).getStringCellValue().equals(country)) {
                 //count += Double.parseDouble(rows.getCell(2).getStringCellValue());
+                if (rows.getCell(2).getCellType() == NUMERIC) {
+                    count = +rows.getCell(2).getNumericCellValue();
+                }
             } else {
                 resultMap.put(rows.getCell(1).getStringCellValue(), count);
                 count = 0.0;
             }
-            if (rows.getCell(2).getCellType() == STRING) {
-                System.out.println(rows.getCell(2).getStringCellValue());
-            } else {
-                System.out.println(rows.getCell(2).getNumericCellValue());
-            }
+
 
         }
-
-        System.out.println(country);
+        for (Map.Entry<String, Double> result : resultMap.entrySet()) {
+            System.out.println(result.getKey() + " " + result.getValue());
+        }
 
         myExcelBook.close();
 
