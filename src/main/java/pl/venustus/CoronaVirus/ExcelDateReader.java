@@ -66,10 +66,13 @@ public class ExcelDateReader {
             if (rows.getCell(1).getStringCellValue().equals(country)) {
                 //count += Double.parseDouble(rows.getCell(2).getStringCellValue());
                 if (rows.getCell(2).getCellType() == NUMERIC) {
-                    count = +rows.getCell(2).getNumericCellValue();
+                    count += Double.valueOf(rows.getCell(2).getStringCellValue());
+                    // System.out.println(rows.getCell(2).getNumericCellValue());
                 }
+                //System.out.println("yes");
             } else {
                 resultMap.put(rows.getCell(1).getStringCellValue(), count);
+                country = rows.getCell(1).getStringCellValue();
                 count = 0.0;
             }
 
