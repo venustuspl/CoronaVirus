@@ -16,7 +16,10 @@ public class Csv {
     public Map<String, Double> downloadCsv() throws IOException {
         int month = LocalDate.now().getMonthValue();
         int day = LocalDate.now().getDayOfMonth();
-        System.out.println(day);
+        String mothString = month < 10 ? "0" + month : String.valueOf(month);
+        String dayString = day < 10 ? "0" + day : String.valueOf(day);
+        int year = LocalDate.now().getYear();
+        System.out.println(year + " " + mothString + " " + dayString);
         InputStream input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-0" + month + "-" + "14" + ".xls").openStream();
 
         //   Reader reader = new InputStreamReader(input, StandardCharsets.UTF_8);

@@ -8,8 +8,8 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 
@@ -60,7 +60,7 @@ public class ExcelDateReader {
 
         String country = row.getCell(1).getStringCellValue();
         Double count = 0.0;
-        Map<String, Double> resultMap = new HashMap<>();
+        Map<String, Double> resultMap = new TreeMap<>();
         for (Row rows : myExcelSheet) {
 
             if (rows.getCell(1).getStringCellValue().equals(country)) {
