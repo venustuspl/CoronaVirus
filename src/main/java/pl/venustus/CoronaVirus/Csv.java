@@ -16,25 +16,29 @@ public class Csv {
     public Map<String, Double> downloadCsv() throws IOException {
         int month = LocalDate.now().getMonthValue();
         int day = LocalDate.now().getDayOfMonth();
-        String mothString = month < 10 ? "0" + month : String.valueOf(month);
+        String monthString = month < 10 ? "0" + month : String.valueOf(month);
         String dayString = day < 10 ? "0" + day : String.valueOf(day);
         int year = LocalDate.now().getYear();
-        System.out.println(year + " " + mothString + " " + dayString);
-        InputStream input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-0" + month + "-" + "14" + ".xls").openStream();
+        System.out.println(year + " " + monthString + " " + dayString);
+        InputStream input;
+        try {
+            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + monthString + "-" + dayString + ".xls").openStream();
+        } catch (IOException e) {
+            return null;
+        }
+        return readFromCSV_4_COMS(input);
 
-        //   Reader reader = new InputStreamReader(input, StandardCharsets.UTF_8);
-//
-//        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withSkipHeaderRecord().parse(reader);
-//
-//        Map<String, Integer> countryMap = new HashMap<>();
+    }
 
-//        for (CSVRecord entry : records) {
-//            countryMap.put(entry.get(1), Integer.valueOf(entry.get(2)));
-//            day++;
-//        }
-//        System.out.println(day);
-//        return countryMap;
-
+    public Map<String, Double> downloadArchiveCsv(String year, int month, int day) throws IOException {
+        String monthString = month < 10 ? "0" + month : String.valueOf(month);
+        String dayString = day < 10 ? "0" + day : String.valueOf(day);
+        InputStream input;
+        try {
+            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + monthString + "-" + dayString + ".xls").openStream();
+        } catch (IOException e) {
+            return null;
+        }
         return readFromCSV_4_COMS(input);
 
     }
