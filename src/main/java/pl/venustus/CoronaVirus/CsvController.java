@@ -8,11 +8,11 @@ import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/")
 public class CsvController {
+
     @Autowired
     Csv csv;
-
 
     @RequestMapping(method = RequestMethod.GET, value = "/alldata")
     public Map<String, Double> showRecords() throws IOException {
@@ -20,10 +20,15 @@ public class CsvController {
         return csv.downloadCsv();
     }
 
-    //http://localhost:8080/v1/archivedata?year=2020&month=03&day=14
+    //http://localhost:8080/archivedata?year=2020&month=03&day=14
     @RequestMapping(method = RequestMethod.GET, value = "/archivedata")
     public Map<String, Double> showArchiveRecords(@RequestParam(value = "year") String year, @RequestParam(value = "month") int month, @RequestParam(value = "day") int day) throws IOException {
 
         return csv.downloadArchiveCsv(year, month, day);
     }
+
+//    @GetMapping("/")
+//    public String home() {
+//        return "home";
+//    }
 }
