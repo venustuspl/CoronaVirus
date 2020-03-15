@@ -23,7 +23,7 @@ fetch("/alldata")
         return countries.map(function (country) { // Map through the results and for each run the code below
             let li = createNode('li'), //  Create the elements we need
                 span = createNode('span');
-            li.innerHTML = `${country.name} ": "${country.count} `; // Make the HTML of our span to be the first and last name of our author
+            li.innerHTML = `${country.name} : ${country.count} `; // Make the HTML of our span to be the first and last name of our author
             append(li, span);
             append(ad, li);
         })

@@ -32,8 +32,4 @@ public class CsvController {
 
         return csv.downloadArchivePolandCsv(year, month, day);
     }
-//    @GetMapping("/")
-//    public String home() {
-//        return "home";
-//    }
 }

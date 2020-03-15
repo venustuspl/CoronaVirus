@@ -104,12 +104,7 @@ public class ExcelDateReader {
 
         }
 
-        // for (Map.Entry<String, Double> result : resultMap.entrySet()) {
-        //   System.out.println(result.getKey() + " " + result.getValue());
-        //}
-
         myExcelBook.close();
-        System.out.println(countryDto.getName());
 
         return countryDto;
 
