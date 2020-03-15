@@ -77,6 +77,37 @@ public class ExcelDateReader {
 
 
         }
+
+        return resultMap;
+
+    }
+
+    public static Map<String, Double> readPolandFromCSV_4_COMS(InputStream file) throws IOException {
+        HSSFWorkbook myExcelBook = new HSSFWorkbook(file);
+        HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
+        HSSFRow row = myExcelSheet.getRow(0);
+
+        String country = row.getCell(1).getStringCellValue();
+        Double count = 0.0;
+        Map<String, Double> resultMap = new TreeMap<>();
+        for (Row rows : myExcelSheet) {
+
+            if (rows.getCell(1).getStringCellValue().equals(country)) {
+                if (rows.getCell(2).getCellType() == NUMERIC) {
+                    count += Double.valueOf(rows.getCell(2).getNumericCellValue());
+
+                }
+
+            } else {
+                if (country.equals("Poland"))
+                    resultMap.put(country, count);
+                country = rows.getCell(1).getStringCellValue();
+                count = Double.valueOf(rows.getCell(2).getNumericCellValue());
+            }
+
+
+        }
+
         // for (Map.Entry<String, Double> result : resultMap.entrySet()) {
         //   System.out.println(result.getKey() + " " + result.getValue());
         //}

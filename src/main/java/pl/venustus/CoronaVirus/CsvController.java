@@ -27,6 +27,11 @@ public class CsvController {
         return csv.downloadArchiveCsv(year, month, day);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/archivepolanddata")
+    public Map<String, Double> showArchivePolandRecords(@RequestParam(value = "year") String year, @RequestParam(value = "month") int month, @RequestParam(value = "day") int day) throws IOException {
+
+        return csv.downloadArchivePolandCsv(year, month, day);
+    }
 //    @GetMapping("/")
 //    public String home() {
 //        return "home";
