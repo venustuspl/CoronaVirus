@@ -53,7 +53,7 @@ public class ExcelDateReader {
 //        myExcelBook.close();
 //
 //    }
-    public static void readFromCSV_4_COMS(InputStream file) throws IOException {
+    public static Map<String, Double> readFromCSV_4_COMS(InputStream file) throws IOException {
         HSSFWorkbook myExcelBook = new HSSFWorkbook(file);
         HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
         HSSFRow row = myExcelSheet.getRow(0);
@@ -64,25 +64,26 @@ public class ExcelDateReader {
         for (Row rows : myExcelSheet) {
 
             if (rows.getCell(1).getStringCellValue().equals(country)) {
-                //count += Double.parseDouble(rows.getCell(2).getStringCellValue());
                 if (rows.getCell(2).getCellType() == NUMERIC) {
                     count += Double.valueOf(rows.getCell(2).getNumericCellValue());
-                    // System.out.println(rows.getCell(2).getNumericCellValue());
+
                 }
-                //System.out.println("yes");
+
             } else {
                 resultMap.put(country, count);
                 country = rows.getCell(1).getStringCellValue();
-                count = 0.0;
+                count = Double.valueOf(rows.getCell(2).getNumericCellValue());
             }
 
 
         }
-        for (Map.Entry<String, Double> result : resultMap.entrySet()) {
-            System.out.println(result.getKey() + " " + result.getValue());
-        }
+        // for (Map.Entry<String, Double> result : resultMap.entrySet()) {
+        //   System.out.println(result.getKey() + " " + result.getValue());
+        //}
 
         myExcelBook.close();
+
+        return resultMap;
 
     }
 

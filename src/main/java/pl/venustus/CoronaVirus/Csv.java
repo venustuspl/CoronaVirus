@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Map;
 
 import static pl.venustus.CoronaVirus.ExcelDateReader.readFromCSV_4_COMS;
 
 @Service
 public class Csv {
 
-    public static void main(String[] args) throws IOException {
+    public Map<String, Double> downloadCsv() throws IOException {
         int month = LocalDate.now().getMonthValue();
         int day = LocalDate.now().getDayOfMonth();
         System.out.println(day);
@@ -31,7 +32,7 @@ public class Csv {
 //        System.out.println(day);
 //        return countryMap;
 
-        readFromCSV_4_COMS(input);
+        return readFromCSV_4_COMS(input);
 
     }
 }

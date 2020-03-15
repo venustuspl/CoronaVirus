@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Controller
 public class CsvController {
@@ -13,6 +14,9 @@ public class CsvController {
 
     @GetMapping("/showRecords")
     public void showRecords() throws IOException {
-       // csv.downloadCsv();
+        Map<String, Double> map = csv.downloadCsv();
+        for (Map.Entry<String, Double> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
     }
 }
