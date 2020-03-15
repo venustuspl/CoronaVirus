@@ -16,7 +16,7 @@ public class Csv {
         int month = LocalDate.now().getMonthValue();
         int day = LocalDate.now().getDayOfMonth();
         System.out.println(day);
-        InputStream input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-0" + month + "-" + day + ".xls").openStream();
+        InputStream input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-0" + month + "-" + "14" + ".xls").openStream();
 
         //   Reader reader = new InputStreamReader(input, StandardCharsets.UTF_8);
 //
