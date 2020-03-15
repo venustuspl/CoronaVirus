@@ -20,8 +20,9 @@ public class CsvController {
         return csv.downloadCsv();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/archivedata/{year}{month}{day}")
-    public Map<String, Double> showArchiveRecords(@RequestParam String year, @RequestParam int month, @RequestParam int day) throws IOException {
+    //http://localhost:8080/v1/archivedata?year=2020&month=03&day=14
+    @RequestMapping(method = RequestMethod.GET, value = "/archivedata")
+    public Map<String, Double> showArchiveRecords(@RequestParam(value = "year") String year, @RequestParam(value = "month") int month, @RequestParam(value = "day") int day) throws IOException {
 
         return csv.downloadArchiveCsv(year, month, day);
     }
