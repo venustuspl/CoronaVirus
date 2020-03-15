@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 
 import static pl.venustus.CoronaVirus.ExcelDateReader.readFromCSV_4_COMS;
 import static pl.venustus.CoronaVirus.ExcelDateReader.readPolandFromCSV_4_COMS;
@@ -14,7 +14,7 @@ import static pl.venustus.CoronaVirus.ExcelDateReader.readPolandFromCSV_4_COMS;
 @Service
 public class Csv {
 
-    public Map<String, Double> downloadCsv() throws IOException {
+    public List<CountryDto> downloadCsv() throws IOException {
         int month = LocalDate.now().getMonthValue();
         int day = LocalDate.now().getDayOfMonth();
         String monthString = month < 10 ? "0" + month : String.valueOf(month);
@@ -31,7 +31,7 @@ public class Csv {
 
     }
 
-    public Map<String, Double> downloadArchiveCsv(String year, int month, int day) throws IOException {
+    public List<CountryDto> downloadArchiveCsv(String year, int month, int day) throws IOException {
         String monthString = month < 10 ? "0" + month : String.valueOf(month);
         String dayString = day < 10 ? "0" + day : String.valueOf(day);
         InputStream input;
@@ -44,7 +44,7 @@ public class Csv {
 
     }
 
-    public Map<String, Double> downloadArchivePolandCsv(String year, int month, int day) throws IOException {
+    public CountryDto downloadArchivePolandCsv(String year, int month, int day) throws IOException {
         String monthString = month < 10 ? "0" + month : String.valueOf(month);
         String dayString = day < 10 ? "0" + day : String.valueOf(day);
         InputStream input;

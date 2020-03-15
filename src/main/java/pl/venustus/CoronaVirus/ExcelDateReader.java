@@ -1,5 +1,6 @@
 package pl.venustus.CoronaVirus;
 
+import org.apache.commons.collections4.list.TreeList;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -8,8 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.List;
 
 import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 
@@ -53,14 +53,14 @@ public class ExcelDateReader {
 //        myExcelBook.close();
 //
 //    }
-    public static Map<String, Double> readFromCSV_4_COMS(InputStream file) throws IOException {
+    public static List<CountryDto> readFromCSV_4_COMS(InputStream file) throws IOException {
         HSSFWorkbook myExcelBook = new HSSFWorkbook(file);
         HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
         HSSFRow row = myExcelSheet.getRow(0);
 
         String country = row.getCell(1).getStringCellValue();
         Double count = 0.0;
-        Map<String, Double> resultMap = new TreeMap<>();
+        List<CountryDto> resultList = new TreeList<>();
         for (Row rows : myExcelSheet) {
 
             if (rows.getCell(1).getStringCellValue().equals(country)) {
@@ -70,7 +70,7 @@ public class ExcelDateReader {
                 }
 
             } else {
-                resultMap.put(country, count);
+                resultList.add(new CountryDto(country, count));
                 country = rows.getCell(1).getStringCellValue();
                 count = Double.valueOf(rows.getCell(2).getNumericCellValue());
             }
@@ -78,33 +78,29 @@ public class ExcelDateReader {
 
         }
 
-        return resultMap;
+        return resultList;
 
     }
 
-    public static Map<String, Double> readPolandFromCSV_4_COMS(InputStream file) throws IOException {
+    public static CountryDto readPolandFromCSV_4_COMS(InputStream file) throws IOException {
         HSSFWorkbook myExcelBook = new HSSFWorkbook(file);
         HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
         HSSFRow row = myExcelSheet.getRow(0);
 
         String country = row.getCell(1).getStringCellValue();
         Double count = 0.0;
-        Map<String, Double> resultMap = new TreeMap<>();
+        CountryDto countryDto = new CountryDto();
         for (Row rows : myExcelSheet) {
 
-            if (rows.getCell(1).getStringCellValue().equals(country)) {
+            if (rows.getCell(1).getStringCellValue().equals("Poland")) {
                 if (rows.getCell(2).getCellType() == NUMERIC) {
                     count += Double.valueOf(rows.getCell(2).getNumericCellValue());
 
                 }
 
-            } else {
-                if (country.equals("Poland"))
-                    resultMap.put(country, count);
-                country = rows.getCell(1).getStringCellValue();
-                count = Double.valueOf(rows.getCell(2).getNumericCellValue());
             }
-
+            countryDto.setName("Poland");
+            countryDto.setCount(count);
 
         }
 
@@ -113,8 +109,9 @@ public class ExcelDateReader {
         //}
 
         myExcelBook.close();
+        System.out.println(countryDto.getName());
 
-        return resultMap;
+        return countryDto;
 
     }
 
