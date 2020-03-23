@@ -67,15 +67,15 @@ public class ExcelDateReader {
         for (Row rows : myExcelSheet) {
 
             if (rows.getCell(6).getStringCellValue().equals(country)) {
-                if (rows.getCell(4).getCellType() == NUMERIC) {
-                    count += Double.valueOf(rows.getCell(2).getNumericCellValue());
+                if (rows.getCell(5).getCellType() == NUMERIC) {
+                    count += Double.valueOf(rows.getCell(5).getNumericCellValue());
 
                 }
 
             } else {
                 resultList.add(new CountryDto(country, count));
                 country = rows.getCell(6).getStringCellValue();
-                count = Double.valueOf(rows.getCell(4).getNumericCellValue());
+                count = Double.valueOf(rows.getCell(5).getNumericCellValue());
             }
 
           //  System.out.println(count);
