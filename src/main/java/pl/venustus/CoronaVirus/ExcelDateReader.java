@@ -5,6 +5,9 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,28 +57,28 @@ public class ExcelDateReader {
 //
 //    }
     public static List<CountryDto> readFromCSV_4_COMS(InputStream file) throws IOException {
-        HSSFWorkbook myExcelBook = new HSSFWorkbook(file);
-        HSSFSheet myExcelSheet = myExcelBook.getSheet("CSV_4_COMS");
-        HSSFRow row = myExcelSheet.getRow(0);
+        XSSFWorkbook myExcelBook = new XSSFWorkbook(file);
+        XSSFSheet myExcelSheet = myExcelBook.getSheet("COVID-19-geographic-disbtributi");
+        XSSFRow row = myExcelSheet.getRow(0);
 
-        String country = row.getCell(1).getStringCellValue();
+        String country = row.getCell(7).getStringCellValue();
         Double count = 0.0;
         List<CountryDto> resultList = new TreeList<>();
         for (Row rows : myExcelSheet) {
 
-            if (rows.getCell(1).getStringCellValue().equals(country)) {
-                if (rows.getCell(2).getCellType() == NUMERIC) {
+            if (rows.getCell(7).getStringCellValue().equals(country)) {
+                if (rows.getCell(5).getCellType() == NUMERIC) {
                     count += Double.valueOf(rows.getCell(2).getNumericCellValue());
 
                 }
 
             } else {
                 resultList.add(new CountryDto(country, count));
-                country = rows.getCell(1).getStringCellValue();
-                count = Double.valueOf(rows.getCell(2).getNumericCellValue());
+                country = rows.getCell(7).getStringCellValue();
+                count = Double.valueOf(rows.getCell(5).getNumericCellValue());
             }
 
-
+            System.out.println(count);
         }
 
         return resultList;

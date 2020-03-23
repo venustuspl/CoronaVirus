@@ -23,7 +23,7 @@ public class Csv {
         System.out.println(year + " " + monthString + " " + dayString);
         InputStream input;
         try {
-            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + monthString + "-" + dayString + ".xls").openStream();
+            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + monthString + "-" + dayString + ".xlsx").openStream();
         } catch (IOException e) {
             return null;
         }
@@ -36,7 +36,8 @@ public class Csv {
         String dayString = day < 10 ? "0" + day : String.valueOf(day);
         InputStream input;
         try {
-            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + monthString + "-" + dayString + ".xls").openStream();
+            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + monthString + "-" + dayString + ".xlsx").openStream();
+            //                        https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-03-23.xlsx
         } catch (IOException e) {
             return null;
         }
@@ -49,7 +50,7 @@ public class Csv {
         String dayString = day < 10 ? "0" + day : String.valueOf(day);
         InputStream input;
         try {
-            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + monthString + "-" + dayString + ".xls").openStream();
+            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + monthString + "-" + dayString + ".xlsx").openStream();
         } catch (IOException e) {
             return null;
         }
