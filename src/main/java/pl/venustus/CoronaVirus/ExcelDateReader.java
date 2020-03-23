@@ -61,24 +61,24 @@ public class ExcelDateReader {
         XSSFSheet myExcelSheet = myExcelBook.getSheet("COVID-19-geographic-disbtributi");
         XSSFRow row = myExcelSheet.getRow(0);
 
-        String country = row.getCell(7).getStringCellValue();
+        String country = row.getCell(6).getStringCellValue();
         Double count = 0.0;
         List<CountryDto> resultList = new TreeList<>();
         for (Row rows : myExcelSheet) {
 
-            if (rows.getCell(7).getStringCellValue().equals(country)) {
-                if (rows.getCell(5).getCellType() == NUMERIC) {
+            if (rows.getCell(6).getStringCellValue().equals(country)) {
+                if (rows.getCell(4).getCellType() == NUMERIC) {
                     count += Double.valueOf(rows.getCell(2).getNumericCellValue());
 
                 }
 
             } else {
                 resultList.add(new CountryDto(country, count));
-                country = rows.getCell(7).getStringCellValue();
-                count = Double.valueOf(rows.getCell(5).getNumericCellValue());
+                country = rows.getCell(6).getStringCellValue();
+                count = Double.valueOf(rows.getCell(4).getNumericCellValue());
             }
 
-            System.out.println(count);
+          //  System.out.println(count);
         }
 
         return resultList;
