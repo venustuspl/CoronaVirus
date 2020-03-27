@@ -32,11 +32,11 @@ public class Csv {
     }
 
     public List<CountryDto> downloadArchiveCsv(String year, int month, int day) throws IOException {
-        String monthString = month < 10 ? "0" + month : String.valueOf(month);
-        String dayString = day < 10 ? "0" + day : String.valueOf(day);
+        //String monthString = month < 10 ? "0" + month : String.valueOf(month);
+        //String dayString = day < 10 ? "0" + day : String.valueOf(day);
         InputStream input;
         try {
-            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + monthString + "-" + dayString + ".xlsx").openStream();
+            input = new URL("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-" + year + "-" + month + "-" + day + ".xlsx").openStream();
             //                        https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-03-23.xlsx
         } catch (IOException e) {
             return null;
